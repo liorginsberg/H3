@@ -35,12 +35,13 @@
         
 
         <ImageButton
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="10dp"
             android:id="@+id/save"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@drawable/marker" />
+            android:src="@drawable/tick"
+            android:scaleType="fitXY"
+            android:background="#77000000"
+            android:padding="10dp" />
 
     </LinearLayout>
     

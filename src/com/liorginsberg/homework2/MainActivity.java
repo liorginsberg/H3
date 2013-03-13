@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -147,8 +148,11 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onLongPress(MotionEvent event) {
-
+			
+			int finalYPosition = (int) (Math.floor(event.getY() - offsetY - DisplayHelper.convertDpToPixel(56, getApplicationContext())));
+			
 			ImageView image = new ImageView(MainActivity.this);
+			
 			RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams(
 					(int) DisplayHelper.convertDpToPixel(56, MainActivity.this),
 					(int) DisplayHelper.convertDpToPixel(56, MainActivity.this));
@@ -156,11 +160,8 @@ public class MainActivity extends Activity {
 			vp.setMargins(
 					(int) (Math.floor(event.getX()
 							- DisplayHelper.convertDpToPixel(28,
-									getApplicationContext()))),
-					(int) (Math.floor(event.getY()
-							- offsetY
-							- DisplayHelper.convertDpToPixel(56,
-									getApplicationContext()))), 0, 0);
+									getApplicationContext()))),finalYPosition, 0, 0);
+			
 			image.setLayoutParams(vp);
 
 			image.setImageResource(R.drawable.marker);
@@ -168,6 +169,13 @@ public class MainActivity extends Activity {
 			
 			image.setOnClickListener(myClickListener);
 
+			TranslateAnimation bounce_marker = new TranslateAnimation(0.0f,
+																	  0.0f,
+																	  (DisplayHelper.convertDpToPixel(-finalYPosition, getApplicationContext())),
+																	   0.0f);
+			bounce_marker.setInterpolator(new BounceInterpolator());
+			bounce_marker.setDuration(1000);
+			image.startAnimation(bounce_marker);
 			overlay.addView(image);
 			super.onLongPress(event);
 		}
