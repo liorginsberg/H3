@@ -29,7 +29,9 @@
             android:inputType="text"
             android:hint="@string/write_something_" 
             android:textColor="#FFFFFF"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="#77000000"
+            android:layout_marginLeft="8dp"/>
         
 
         <ImageButton
