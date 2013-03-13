@@ -1,17 +1,7 @@
 package com.liorginsberg.homework2;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import android.app.Activity;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.opengl.Visibility;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -28,11 +18,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-	private boolean isTextShow = false;
+	
 
 	public static final int REQUEST_EDIT_MARKER = 1001;
 
@@ -40,9 +29,7 @@ public class MainActivity extends Activity {
 	private GestureDetectorCompat mDetector;
 	private int offsetY = 0;
 
-	private List<Marker> markers;
 
-	private View temp = null;
 
 	private LinearLayout textPanel;
 	private TranslateAnimation slideUp;
@@ -50,7 +37,6 @@ public class MainActivity extends Activity {
 
 	private ImageButton saveButton;
 
-	private TranslateAnimation slideUpAndDown;
 
 	private EditText etText;
 
@@ -83,7 +69,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		markers = new ArrayList<Marker>();
+		
 
 		overlay = (RelativeLayout) findViewById(R.id.overlay);
 
