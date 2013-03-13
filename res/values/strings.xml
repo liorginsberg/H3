@@ -3,4 +3,6 @@
 
     <string name="app_name">HomeWork2</string>
 
+    <string name="write_something_">Write something...</string>
+
 </resources>
