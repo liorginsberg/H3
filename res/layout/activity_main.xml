@@ -43,6 +43,15 @@
             android:scaleType="fitXY"
             android:background="#77000000"
             android:padding="10dp" />
+        
+         <ImageButton
+            android:id="@+id/remove"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/remove"
+            android:scaleType="fitXY"
+            android:background="#77000000"
+            android:padding="10dp" />
 
     </LinearLayout>
     

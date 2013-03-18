@@ -74,6 +74,7 @@ public class MainActivity extends Activity {
 			textPanel.startAnimation(slideDown);
 		}
 	};
+	private ImageButton removeButton;
 	
 	
 	@Override
@@ -102,6 +103,20 @@ public class MainActivity extends Activity {
 				ImageView marker = (ImageView) textPanel.getTag();
 				marker.setImageResource(R.drawable.marker);
 				marker.setTag(etText.getText().toString());
+				textPanel.startAnimation(slideUp);
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(etText.getWindowToken(), 0);
+
+			}
+		});
+		
+		removeButton = (ImageButton) findViewById(R.id.remove);
+		removeButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				ImageView marker = (ImageView) textPanel.getTag();
+				overlay.removeView(marker);
 				textPanel.startAnimation(slideUp);
 				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(etText.getWindowToken(), 0);
