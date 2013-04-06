@@ -1,4 +1,4 @@
-package com.liorginsberg.homework2;
+package com.liorginsberg.homework3;
 
 import android.content.Context;
 import android.content.res.Resources;

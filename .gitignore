@@ -1,0 +1,10 @@
+#android
+/gen
+/bin
+!*.apk
+
+#eclipse
+*.classpath
+*.project
+project.properties
+/.settings
