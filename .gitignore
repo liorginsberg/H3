@@ -3,8 +3,17 @@
 /bin
 !*.apk
 
+
+
 #eclipse
 *.classpath
 *.project
 project.properties
 /.settings
+
+
+
+#specific
+/lib/Parse-1.2.0.jar.properties
+
+/lib/Parse-1.2.0-javadoc
