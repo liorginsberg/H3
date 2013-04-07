@@ -1,5 +1,7 @@
 package com.liorginsberg.homework3;
 
+import com.liorginsberg.homework3.utils.DisplayHelper;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
