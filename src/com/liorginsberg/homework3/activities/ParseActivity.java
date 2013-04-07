@@ -35,14 +35,18 @@ public class ParseActivity extends SherlockActivity {
 
 	private static final String TAG = ParseActivity.class.getSimpleName();
 
-	public static final float[][] markersPositions = {{0.28194445f, 0.12657033f},
-													  {0.50555557f, 0.12620424f},
-													  {0.22361112f, 0.21579961f},
-													  {0.24583334f, 0.32851636f},
-													  {0.25f, 0.5019268f},
-													  {0.24583334f, 0.88728327f},
-													  {0.25416666f, 0.81021196f},
-													  {0.36666667f, 0.30057803f}};
+	
+	// Markers positions in percentages relative to the markers overlay view
+	public static final float[][] markersPositions = {{0.28194445f, 0.12657033f}, 	//shenkar_qr_code_04.1
+													  {0.50555557f, 0.12620424f}, 	//shenkar_qr_code_04.2
+													  {0.22361112f, 0.21579961f}, 	//shenkar_qr_code_04.3
+													  {0.36666667f, 0.30057803f}, 	//shenkar_qr_code_04.4
+													  {0.24583334f, 0.32851636f}, 	//shenkar_qr_code_04.5													 
+													  {0.25000000f, 0.5019268f},  	//shenkar_qr_code_04.6
+													  {0.25555557f, 0.5963391f},  	//shenkar_qr_code_04.7
+													  {0.25416666f, 0.81021196f}, 	//shenkar_qr_code_04.8
+													  {0.36111111f, 0.86223507f}, 	//shenkar_qr_code_04.9
+													  {0.24583334f, 0.88728327f}};	//shenkar_qr_code_04.10
 												
    
 
