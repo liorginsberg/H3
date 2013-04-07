@@ -35,6 +35,17 @@ public class ParseActivity extends SherlockActivity {
 
 	private static final String TAG = ParseActivity.class.getSimpleName();
 
+	public static final float[][] markersPositions = {{0.28194445f, 0.12657033f},
+													  {0.50555557f, 0.12620424f},
+													  {0.22361112f, 0.21579961f},
+													  {0.24583334f, 0.32851636f},
+													  {0.25f, 0.5019268f},
+													  {0.24583334f, 0.88728327f},
+													  {0.25416666f, 0.81021196f},
+													  {0.36666667f, 0.30057803f}};
+												
+   
+
 	private IntentIntegrator integrator;
 
 	private RelativeLayout overlay;
@@ -99,10 +110,10 @@ public class ParseActivity extends SherlockActivity {
 
 		textPanel = (LinearLayout) findViewById(R.id.textPanel);
 		etText = (EditText) findViewById(R.id.etText);
-		slideUp = new TranslateAnimation(0.0f, 0.0f, 0.0f, DisplayHelper.convertDpToPixel(-40, this));
+		slideUp = new TranslateAnimation(0.0f, 0.0f, 0.0f, DisplayHelper.convertDpToPixel(this, -40));
 		slideUp.setDuration(750);
 		slideUp.setAnimationListener(collapseListener);
-		slideDown = new TranslateAnimation(0.0f, 0.0f, DisplayHelper.convertDpToPixel(-40, this), 0.0f);
+		slideDown = new TranslateAnimation(0.0f, 0.0f, DisplayHelper.convertDpToPixel(this, -40), 0.0f);
 		slideDown.setDuration(750);
 
 		saveButton = (ImageButton) findViewById(R.id.save);
@@ -147,8 +158,8 @@ public class ParseActivity extends SherlockActivity {
 				if (offsetY == 0) {
 					offsetY = totalY - overlayY;
 				}
-				Log.i("GLOBAL WIDTH", "width in dp:" + DisplayHelper.convertPixelsToDp(displayMetrics.widthPixels, ParseActivity.this));
-				Log.i("GLOBAL HEIGT", "height in dp:" + DisplayHelper.convertPixelsToDp(displayMetrics.heightPixels, ParseActivity.this));
+				Log.i("GLOBAL WIDTH", "width in dp:" + DisplayHelper.convertPixelsToDp(ParseActivity.this, displayMetrics.widthPixels));
+				Log.i("GLOBAL HEIGT", "height in dp:" + DisplayHelper.convertPixelsToDp(ParseActivity.this, displayMetrics.heightPixels));
 			}
 		};
 
@@ -193,21 +204,43 @@ public class ParseActivity extends SherlockActivity {
 
 		@Override
 		public void onLongPress(MotionEvent event) {
+			
+			DisplayMetrics displayMetrics = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-			int finalYPosition = (int) (Math.floor(event.getY() - offsetY - DisplayHelper.convertDpToPixel(56, getApplicationContext())));
+			int totalY = displayMetrics.heightPixels;
+			int overlayY = overlay.getHeight();
+			if (offsetY == 0) {
+				offsetY = totalY - overlayY;
+			}
+			
+			Log.i(TAG, "displayMetrics.widthPixels->" + displayMetrics.widthPixels);
+			Log.i(TAG, "displayMetrics.heightPixels->" + displayMetrics.heightPixels);
+			
+			Log.i(TAG, "offsetY->" + (displayMetrics.heightPixels - overlayY));
+			
+			Log.i(TAG, "overlayY->" + overlayY);
+			
+			Log.i(TAG, "event.getX()->"+event.getX());
+			Log.i(TAG, "event.getY()->"+event.getY());
+			
+			
+			Log.e(TAG, "px = " + (event.getX()/overlay.getWidth()));
+			Log.e(TAG, "py = " + ((event.getY() - offsetY)/overlayY));
+			
+			
+		
+
+			int finalYPosition = (int) (Math.floor(event.getY() - offsetY));
 
 			ImageView image = new ImageView(ParseActivity.this);
 
-			RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams((int) DisplayHelper.convertDpToPixel(56, ParseActivity.this),
-					(int) DisplayHelper.convertDpToPixel(56, ParseActivity.this));
+			RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams((int) DisplayHelper.convertDpToPixel(ParseActivity.this, 56),
+					(int) DisplayHelper.convertDpToPixel(ParseActivity.this, 56));
 
-			vp.setMargins((int) (Math.floor(event.getX() - DisplayHelper.convertDpToPixel(28, getApplicationContext()))), finalYPosition,
+			vp.setMargins((int) (Math.floor(event.getX())), finalYPosition,
 					0, 0);
 
-			Log.i("GLOBAL WIDTH", "x pos in dp:" + DisplayHelper.convertPixelsToDp(event.getX(), ParseActivity.this));
-			Log.i("GLOBAL WIDTH", "y pos in dp:" + DisplayHelper.convertPixelsToDp(finalYPosition, ParseActivity.this));
-	
-			
 			image.setLayoutParams(vp);
 
 			image.setImageResource(R.drawable.marker);
@@ -217,8 +250,8 @@ public class ParseActivity extends SherlockActivity {
 			AnimationSet bounceMarkerAnimationSet = new AnimationSet(true);
 			bounceMarkerAnimationSet.setInterpolator(new BounceInterpolator());
 			bounceMarkerAnimationSet.setDuration(1000);
-			TranslateAnimation trans = new TranslateAnimation(0.0f, 0.0f, (DisplayHelper.convertDpToPixel(-finalYPosition,
-					getApplicationContext())), 0.0f);
+			TranslateAnimation trans = new TranslateAnimation(0.0f, 0.0f, (DisplayHelper.convertDpToPixel(getApplicationContext(),
+					-finalYPosition)), 0.0f);
 			ScaleAnimation scale = new ScaleAnimation(4, 1, 4, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 			bounceMarkerAnimationSet.addAnimation(trans);
 			bounceMarkerAnimationSet.addAnimation(scale);
@@ -246,25 +279,28 @@ public class ParseActivity extends SherlockActivity {
 				if (scanResult != null) {
 					String result = scanResult.getContents();
 					Log.i(TAG, "Scan result: " + result);
-					if (result.equals("shenkar_qr_code_04.1")) {
-						ImageView image = new ImageView(ParseActivity.this);
 
-						RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams((int) DisplayHelper.convertDpToPixel(56,
-								ParseActivity.this), (int) DisplayHelper.convertDpToPixel(56, ParseActivity.this));
+					ImageView image = new ImageView(ParseActivity.this);
 
-						DisplayMetrics dm = new DisplayMetrics();
-						getWindowManager().getDefaultDisplay().getMetrics(dm);
-						
-						Log.i("DISPLAYX", "expected 360, tahles is:" + DisplayHelper.convertPixelsToDp(dm.widthPixels,getApplicationContext()));
-						vp.setMargins(DisplayHelper.getPixelPositionByPrecentage(dm, DisplayHelper.PRSENTAGE_X, 0.2833f, 0),
-								DisplayHelper.getPixelPositionByPrecentage(dm, DisplayHelper.PRSENTAGE_Y, 0.01266f, offsetY), 0, 0);
-						image.setLayoutParams(vp);
+					RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams(
+													(int) DisplayHelper.convertDpToPixel(ParseActivity.this, 56),
+													(int) DisplayHelper.convertDpToPixel(ParseActivity.this, 56));
 
-						image.setImageResource(R.drawable.marker);
+					DisplayMetrics dm = new DisplayMetrics();
+					getWindowManager().getDefaultDisplay().getMetrics(dm);
+					
+					String[] extractIndex = result.split("\\."); 
+					int i = Integer.parseInt(extractIndex[1]) -1;
+				
+					vp.setMargins((int)(overlay.getWidth()*markersPositions[i][0] - DisplayHelper.convertDpToPixel(this, 28)),
+								  (int)(overlay.getHeight()*markersPositions[i][1] - DisplayHelper.convertDpToPixel(this, 56)), 0, 0);
+				
+					image.setLayoutParams(vp);
 
-						overlay.addView(image);
+					image.setImageResource(R.drawable.marker);
 
-					}
+					overlay.addView(image);
+
 				} else {
 					Log.i(TAG, "Scan result return bad or canceled");
 				}

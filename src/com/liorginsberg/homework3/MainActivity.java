@@ -38,22 +38,22 @@ public class MainActivity extends Activity {
 	private ImageButton saveButton;
 
 	private EditText etText;
-	
+
 	Animation.AnimationListener collapseListener = new Animation.AnimationListener() {
-		
+
 		public void onAnimationEnd(Animation animation) {
 			textPanel.setVisibility(View.GONE);
 		}
 
 		public void onAnimationRepeat(Animation animation) {
-		
+
 		}
 
 		public void onAnimationStart(Animation animation) {
-		
+
 		}
 	};
-	
+
 	OnClickListener myClickListener = new OnClickListener() {
 
 		@Override
@@ -77,8 +77,7 @@ public class MainActivity extends Activity {
 		}
 	};
 	private ImageButton removeButton;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,12 +88,10 @@ public class MainActivity extends Activity {
 
 		textPanel = (LinearLayout) findViewById(R.id.textPanel);
 		etText = (EditText) findViewById(R.id.etText);
-		slideUp = new TranslateAnimation(0.0f, 0.0f, 0.0f,
-				DisplayHelper.convertDpToPixel(-40, this));
+		slideUp = new TranslateAnimation(0.0f, 0.0f, 0.0f, DisplayHelper.convertDpToPixel(this, -40));
 		slideUp.setDuration(750);
 		slideUp.setAnimationListener(collapseListener);
-		slideDown = new TranslateAnimation(0.0f, 0.0f,
-				DisplayHelper.convertDpToPixel(-40, this), 0.0f);
+		slideDown = new TranslateAnimation(0.0f, 0.0f, DisplayHelper.convertDpToPixel(this, -40), 0.0f);
 		slideDown.setDuration(750);
 
 		saveButton = (ImageButton) findViewById(R.id.save);
@@ -111,7 +108,7 @@ public class MainActivity extends Activity {
 
 			}
 		});
-		
+
 		removeButton = (ImageButton) findViewById(R.id.remove);
 		removeButton.setOnClickListener(new OnClickListener() {
 
@@ -126,15 +123,13 @@ public class MainActivity extends Activity {
 			}
 		});
 
-
 		final OnGlobalLayoutListener offsetYLayoutListener = new OnGlobalLayoutListener() {
 
 			@Override
 			public void onGlobalLayout() {
 
 				DisplayMetrics displayMetrics = new DisplayMetrics();
-				getWindowManager().getDefaultDisplay().getMetrics(
-						displayMetrics);
+				getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
 				int totalY = displayMetrics.heightPixels;
 				int overlayY = overlay.getHeight();
@@ -145,11 +140,9 @@ public class MainActivity extends Activity {
 			}
 		};
 
-		overlay.getViewTreeObserver().addOnGlobalLayoutListener(
-				offsetYLayoutListener);
+		overlay.getViewTreeObserver().addOnGlobalLayoutListener(offsetYLayoutListener);
 		mDetector = new GestureDetectorCompat(this, new MyGestureListener());
 	}
-
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -157,7 +150,7 @@ public class MainActivity extends Activity {
 	}
 
 	class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-		
+
 		@Override
 		public boolean onDown(MotionEvent event) {
 			return true;
@@ -166,21 +159,14 @@ public class MainActivity extends Activity {
 		@Override
 		public void onLongPress(MotionEvent event) {
 
-			int finalYPosition = (int) (Math.floor(event.getY()
-					- offsetY
-					- DisplayHelper.convertDpToPixel(56,
-							getApplicationContext())));
+			int finalYPosition = (int) (Math.floor(event.getY() - offsetY - DisplayHelper.convertDpToPixel(getApplicationContext(), 56)));
 
 			ImageView image = new ImageView(MainActivity.this);
 
-			RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams(
-					(int) DisplayHelper.convertDpToPixel(56, MainActivity.this),
-					(int) DisplayHelper.convertDpToPixel(56, MainActivity.this));
+			RelativeLayout.LayoutParams vp = new RelativeLayout.LayoutParams((int) DisplayHelper.convertDpToPixel(MainActivity.this, 56),
+					(int) DisplayHelper.convertDpToPixel(MainActivity.this, 56));
 
-			vp.setMargins(
-					(int) (Math.floor(event.getX()
-							- DisplayHelper.convertDpToPixel(28,
-									getApplicationContext()))), finalYPosition,
+			vp.setMargins((int) (Math.floor(event.getX() - DisplayHelper.convertDpToPixel(getApplicationContext(), 28))), finalYPosition,
 					0, 0);
 
 			image.setLayoutParams(vp);
@@ -192,25 +178,21 @@ public class MainActivity extends Activity {
 			AnimationSet bounceMarkerAnimationSet = new AnimationSet(true);
 			bounceMarkerAnimationSet.setInterpolator(new BounceInterpolator());
 			bounceMarkerAnimationSet.setDuration(1000);
-			TranslateAnimation trans = new TranslateAnimation(0.0f, 0.0f,
-					(DisplayHelper.convertDpToPixel(-finalYPosition,
-							getApplicationContext())), 0.0f);
-			ScaleAnimation scale = new ScaleAnimation(4, 1, 4, 1,
-					Animation.RELATIVE_TO_SELF, 0.5f,
-					Animation.RELATIVE_TO_SELF, 0.5f);
+			TranslateAnimation trans = new TranslateAnimation(0.0f, 0.0f, (DisplayHelper.convertDpToPixel(getApplicationContext(),
+					-finalYPosition)), 0.0f);
+			ScaleAnimation scale = new ScaleAnimation(4, 1, 4, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 			bounceMarkerAnimationSet.addAnimation(trans);
 			bounceMarkerAnimationSet.addAnimation(scale);
 
 			image.startAnimation(bounceMarkerAnimationSet);
-			
+
 			overlay.addView(image);
 			super.onLongPress(event);
 		}
 
 		@Override
-		public boolean onFling(MotionEvent event1, MotionEvent event2,
-				float velocityX, float velocityY) {
-			
+		public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+
 			return true;
 		}
 	}
