@@ -1,7 +1,9 @@
 package com.liorginsberg.homework3.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -9,14 +11,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.liorginsberg.homework3.R;
-import com.liorginsberg.homework3.R.id;
-import com.liorginsberg.homework3.R.layout;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 public class SingupActivity extends Activity {
 
+	private static final String TAG = "SingupActivity"; 
+	
 	private EditText etRegUsername;
 	private EditText etRegEmail;
 	private EditText etRegPassword;
@@ -27,6 +29,12 @@ public class SingupActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_singup);
+		
+		Log.d(TAG, "onCreate");
+		
+		final Bundle bundle = getIntent().getExtras();
+		
+		
 
 		etRegUsername = (EditText) findViewById(R.id.etRegUsername);
 		etRegEmail = (EditText) findViewById(R.id.etRegEmail);
@@ -52,13 +60,13 @@ public class SingupActivity extends Activity {
 						user.setPassword(password);
 						user.setEmail(email);
 
-						// other fields can be set just like with ParseObject
-						// user.put("phone", "650-253-0000");
-
 						user.signUpInBackground(new SignUpCallback() {
 							public void done(ParseException e) {
 								if (e == null) {
-									Toast.makeText(SingupActivity.this, "You have register successfully enjoy", Toast.LENGTH_SHORT).show();
+									Intent intenResult = new Intent();
+									intenResult.putExtras(bundle);
+									setResult(RESULT_OK, intenResult);
+									finish();
 								} else {
 									Toast.makeText(SingupActivity.this, "Code: " + e.getCode() + " Msg: " + e.getMessage(), Toast.LENGTH_SHORT).show();
 								}

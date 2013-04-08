@@ -4,7 +4,10 @@ import android.app.Application;
 
 import com.parse.Parse;
 
-public class ParseApplication extends Application {
+public class InHereApplication extends Application {
+
+	public static final int REQUEST_LOGIN = 101;
+	public static final int REQUEST_SINGUP = 102;
 
 	@Override
 	public void onCreate() {

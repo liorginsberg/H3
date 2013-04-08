@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    
-    <item android:id="@+id/scanCode"
+
+    <item
+        android:id="@+id/scanCode"
         android:icon="@drawable/ic_scanner"
-         android:showAsAction="always" />
-    
+        android:showAsAction="always"/>
+    <item
+        android:id="@+id/userMenu"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_person">
+        <menu>
+            <item
+                android:id="@+id/menuLogout"
+                android:showAsAction="always"
+                android:title="Logout"/>
+            <item
+                android:id="@+id/menuLogin"
+                android:showAsAction="always"
+                android:title="submenu 2"/>
+        </menu>
+    </item>
 
 </menu>
