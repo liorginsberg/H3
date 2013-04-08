@@ -2,48 +2,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="#66000000"
+    android:orientation="vertical"
+    android:padding="30dp" >
 
-    <TextView
-        android:id="@+id/tvOwnerTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Owner" />
+        android:layout_gravity="center"
+        android:background="@drawable/back"
+        android:orientation="vertical"
+       android:paddingTop="10dp"
+       android:paddingLeft="8dp"
+       android:paddingRight="8dp"
+        android:paddingBottom="30dp" >
 
-    <TextView
-        android:id="@+id/tvOwner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="The Owner"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/tvOwnerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OWNER"
+            android:textColor="#FFFFFF" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="msg" />
+        <TextView
+            android:id="@+id/tvOwner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The Owner"
 
-    <EditText
-        android:id="@+id/etOwnerMsg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" 
-        android:visibility="gone">
-		
-    </EditText>
+            android:textColor="#FFFFFF" />
 
-    <TextView
-        android:id="@+id/tvMsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="msg"
-        android:visibility="gone" />
+        <TextView
+            android:layout_marginTop="12dp"
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MESSAGE"
+            android:textColor="#FFFFFF" />
 
-    <Button
-        android:id="@+id/btnEditMsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update Message"
-        android:visibility="gone" />
+        <EditText
+            android:id="@+id/etOwnerMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:visibility="gone"
+            android:background="@drawable/text_field" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/tvMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="msg"
+            android:visibility="gone"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnEditMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Message"
+            android:background="@drawable/button"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FFFFFF"
+             android:layout_marginTop="8dp"/>
+    </LinearLayout>
 
 </LinearLayout>
