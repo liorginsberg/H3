@@ -34,7 +34,6 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 
 		final Bundle bundle = getIntent().getExtras();
-		
 
 		etUsername = (EditText) findViewById(R.id.etUserName);
 		etPassword = (EditText) findViewById(R.id.etPassword);
@@ -64,14 +63,15 @@ public class LoginActivity extends Activity {
 						@Override
 						public void done(ParseUser user, ParseException e) {
 							if (user != null) {
-								finish();
+								Intent resultIntent = new Intent();
+								resultIntent.putExtra("markerID", bundle.getString("markerID"));
+								resultIntent.putExtra("msg", bundle.getString("msg"));
+								setResult(RESULT_OK, resultIntent);
 								Log.i(TAG, "Login Succeeded: " + user.getEmail());
+								finish();
 							} else {
 								Log.e(TAG, "Code: " + e.getCode() + " - Msg: " + e.getMessage());
-								if (e.getCode() == ParseException.OBJECT_NOT_FOUND) {
-									Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-								}
-
+								Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 							}
 
 						}
@@ -85,8 +85,8 @@ public class LoginActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		//TODO arived from SingupActivity but not in flow of setting a marker
-		
+		// TODO arived from SingupActivity but not in flow of setting a marker
+
 		if (requestCode == InHereApplication.REQUEST_SINGUP) {
 			if (resultCode == RESULT_OK) {
 				if (data.hasExtra("markerID") && data.hasExtra("msg")) {

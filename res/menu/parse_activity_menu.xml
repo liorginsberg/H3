@@ -14,10 +14,7 @@
                 android:id="@+id/menuLogout"
                 android:showAsAction="always"
                 android:title="Logout"/>
-            <item
-                android:id="@+id/menuLogin"
-                android:showAsAction="always"
-                android:title="submenu 2"/>
+       
         </menu>
     </item>
 
