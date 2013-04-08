@@ -2,57 +2,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
-    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="30dp" >
+    android:paddingBottom="40dp"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp"
+    android:background="@drawable/back" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/logo"
+        android:layout_gravity="center_horizontal" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_marginTop="40dp"
         android:gravity="center_vertical"
         android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="InHere"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:background="@drawable/text_field"
             android:ems="10"
-            android:hint="Username or Email" >
+            android:hint="Username" >
         </EditText>
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+          
+            android:background="@drawable/text_field"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword" />
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Log In" />
-    </LinearLayout>
+            android:layout_marginTop="25dp"
+            android:background="@drawable/button"
+            android:text="Log In"
+            android:textColor="@android:color/white" />
 
-    <TextView
-        android:id="@+id/tvSingup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Sing Up" />
+        <TextView
+           
+            android:id="@+id/tvSingup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="Sing Up for InHere"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 
 </LinearLayout>

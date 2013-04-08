@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -84,9 +86,10 @@ public class ParseActivity extends SherlockActivity {
 			public void done(List<ParseObject> objects, ParseException e) {
 				if (e == null) {
 					for (ParseObject parseObject : objects) {
-						String markerID = (String) parseObject.get("marker_id");
-						addMarkerToOverlay(markerID);
-
+						if (!parseObject.getString("owner").equals("")) {
+							String markerID = parseObject.getString("marker_id");
+							addMarkerToOverlay(markerID);
+						}
 					}// TODO error checking and handeling
 				}
 			}
@@ -148,12 +151,9 @@ public class ParseActivity extends SherlockActivity {
 							public void done(List<ParseObject> objects, ParseException e) {
 								if (e == null) {
 									final ParseObject currentMarkerObject = objects.get(0);
-									String owner = (String) currentMarkerObject.get("owner");
+									String owner = currentMarkerObject.getString("owner");
 									Log.i(TAG, "owner? = " + owner);
-									if (owner == null) {
-										// TODO prompt the user to insert a
-										// massage, and in order to do so he
-										// will need to connect
+									if (owner == null || owner.equals("")) {
 
 										LayoutInflater li = LayoutInflater.from(getApplicationContext());
 										final LinearLayout ll = (LinearLayout) li.inflate(R.layout.prompt_marker, null);
@@ -169,12 +169,10 @@ public class ParseActivity extends SherlockActivity {
 											public void onClick(View v) {
 												final String msg = etMarkerMessage.getText().toString();
 												if (msg.equals("")) {
-													AnimatorSet set = new AnimatorSet();
-													set.playTogether(ObjectAnimator.ofFloat(etMarkerMessage, "scaleX", 1, 1.5f, 1),
-															ObjectAnimator.ofFloat(etMarkerMessage, "scaleY", 1, 1.5f, 1));
-													set.setDuration(500).start();
+													startEmptyEditTextAnimation(etMarkerMessage);
 												} else {
-													// TODO check user login
+													// Taking The user to a
+													// login singup route
 													ParseUser user = ParseUser.getCurrentUser();
 													if (user == null) {
 														Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -212,6 +210,56 @@ public class ParseActivity extends SherlockActivity {
 
 										interactionLayer.addView(ll);
 
+									} else {
+										// show nice message with details of the
+										// owner
+										LayoutInflater li = LayoutInflater.from(getApplicationContext());
+										final LinearLayout ll = (LinearLayout) li.inflate(R.layout.show_marker_details, null);
+										LinearLayout.LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,
+												LayoutParams.MATCH_PARENT);
+										ll.setLayoutParams(lp);
+										ParseUser currentUser = ParseUser.getCurrentUser();
+
+										// configure the message with specific
+										// fields for owner
+										if (currentUser != null && currentUser.getUsername().equals(owner)) {
+
+											Log.i(TAG, "The markers owner is the current user");
+
+											TextView tvOwner = (TextView) ll.findViewById(R.id.tvOwner);
+											tvOwner.setText("You");
+											final EditText etMsg = (EditText) ll.findViewById(R.id.etOwnerMsg);
+											etMsg.setVisibility(View.VISIBLE);
+											final Button btnEditMsg = (Button) ll.findViewById(R.id.btnEditMsg);
+											btnEditMsg.setVisibility(View.VISIBLE);
+											btnEditMsg.setOnClickListener(new OnClickListener() {
+
+												@Override
+												public void onClick(View v) {
+													if (etMsg.getText().toString().equals("")) {
+														startEmptyEditTextAnimation(etMsg);
+													} else {
+														currentMarkerObject.put("msg", etMsg.getText().toString());
+														currentMarkerObject.saveInBackground(new SaveCallback() {
+
+															@Override
+															public void done(ParseException e) {
+																Toast.makeText(getApplicationContext(), "Your massage hase been updated.",
+																		Toast.LENGTH_SHORT).show();
+															}
+														});
+													}
+												}
+											});
+
+										} else {
+											TextView tvOwner = (TextView) ll.findViewById(R.id.tvOwner);
+											tvOwner.setText(currentMarkerObject.getString("owner"));
+											TextView tvMsg = (TextView) ll.findViewById(R.id.tvMsg);
+											tvMsg.setVisibility(View.VISIBLE);
+											tvMsg.setText((String) currentMarkerObject.getString("msg"));
+										}
+										interactionLayer.addView(ll);
 									}
 
 								} else {
@@ -281,5 +329,11 @@ public class ParseActivity extends SherlockActivity {
 		image.setImageResource(R.drawable.marker);
 
 		overlay.addView(image);
+	}
+
+	private void startEmptyEditTextAnimation(EditText editText) {
+		AnimatorSet set = new AnimatorSet();
+		set.playTogether(ObjectAnimator.ofFloat(editText, "scaleX", 1, 1.5f, 1), ObjectAnimator.ofFloat(editText, "scaleY", 1, 1.5f, 1));
+		set.setDuration(500).start();
 	}
 }
